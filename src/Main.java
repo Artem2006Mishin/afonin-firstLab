@@ -4,9 +4,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        System.out.print("Укажите размер массива: "); // добавить валидацию
-        final int arraySize = in.nextInt();
-        in.nextLine();
+        System.out.print("Укажите размер массива: ");
+        int arraySize = 0;
+        try {
+            final int inputSize = Integer.parseInt(in.nextLine());
+            if (inputSize <= 0) {
+                throw new Exception("ОШИБКА: Размер массива должен быть положительным");
+            }
+            arraySize = inputSize;
+        } catch (NumberFormatException e) {
+            System.out.println("ОШИБКА: Размер массива указан не верно");
+            return;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         System.out.print("Введите массив целых чисел: ");
         final String inputLine = in.nextLine();
@@ -14,10 +26,11 @@ public class Main {
 
         try {
             if (arraySize != inputArray.length) {
-                throw new Exception("ОШИБКА: Размер не совпадает с кол-вом введенных значений");
+                throw new Exception("ОШИБКА: Размер массива не совпадает с кол-вом введенных значений");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return;
         }
 
         final int[] numbers = new int[arraySize];
@@ -25,10 +38,10 @@ public class Main {
         for (int i = 0; i < inputArray.length; i++) {
             try {
                 numbers[i] = Integer.parseInt(inputArray[i]);
-//                throw new NumberFormatException("ОШИБКА: Размер не совпадает с кол-вом введенных значений");
             } catch (NumberFormatException e) {
                 numbers[i] = 0;
-                System.out.println("Ошибка" + inputArray[i]);
+                System.out.println("ОШИБКА: Символ " + inputArray[i] + " не является целым числом");
+                return;
             }
         }
 
@@ -40,15 +53,25 @@ public class Main {
             }
         }
 
-        System.out.println(firstPositiveNum);
+        final int[][] arrayPascalTriangle = new int[firstPositiveNum][];
+        for (int i = 0; i < firstPositiveNum; i++) {
+            arrayPascalTriangle[i] = new int[i + 1];
+            for (int j = 0; j < i + 1; j++) {
+                if (j != 0 && j != i) {
+                    final int leftNum = arrayPascalTriangle[i - 1][j - 1];
+                    final int rightNum = arrayPascalTriangle[i - 1][j];
+                    arrayPascalTriangle[i][j] = leftNum + rightNum;
+                } else {
+                    arrayPascalTriangle[i][j] = 1;
+                }
+            }
+        }
 
-
-        // n - это начальньное звено то есть вершина треугольника
-        // положим его сразу в массив
-
-
-
-
-
+        for (int i = 0; i < firstPositiveNum; i++) {
+            for (int j = 0; j < i + 1; j++) {
+                System.out.print(arrayPascalTriangle[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
