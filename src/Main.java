@@ -67,6 +67,7 @@ public class Main {
             }
         }
 
+        // это вывод
         for (int i = 0; i < firstPositiveNum; i++) {
             for (int j = 0; j < i + 1; j++) {
                 System.out.print(arrayPascalTriangle[i][j]);
