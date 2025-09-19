@@ -1,47 +1,57 @@
+/*
+* Мишин Артём
+* Бояркин Максим
+* 24ВП1
+* Вариант 9 ЛАба 1
+* Рассчет треугольника Паскаля для первого положительного числа в массиве
+* */
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        System.out.print("Укажите размер массива: ");
+        boolean isCorrectInput = false;
         int arraySize = 0;
-        try {
-            final int inputSize = Integer.parseInt(in.nextLine());
-            if (inputSize <= 0) {
-                throw new Exception("ОШИБКА: Размер массива должен быть положительным");
-            }
-            arraySize = inputSize;
-        } catch (NumberFormatException e) {
-            System.out.println("ОШИБКА: Размер массива указан не верно");
-            return;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
+        int[] numbers = new int[arraySize];
+        String[] inputArray = new String[0];
 
-        System.out.print("Введите массив целых чисел: ");
-        final String inputLine = in.nextLine();
-        final String[] inputArray = inputLine.split(" ");
+        while (!isCorrectInput) {
+            System.out.print("Укажите размер массива: ");
 
-        try {
-            if (arraySize != inputArray.length) {
-                throw new Exception("ОШИБКА: Размер массива не совпадает с кол-вом введенных значений");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        final int[] numbers = new int[arraySize];
-
-        for (int i = 0; i < inputArray.length; i++) {
             try {
-                numbers[i] = Integer.parseInt(inputArray[i]);
+                final int inputSize = Integer.parseInt(in.nextLine());
+                if (inputSize <= 0) {
+                    throw new Exception("ОШИБКА: Размер массива должен быть положительным");
+                }
+                isCorrectInput = true;
+                arraySize = inputSize;
             } catch (NumberFormatException e) {
-                numbers[i] = 0;
-                System.out.println("ОШИБКА: Символ " + inputArray[i] + " не является целым числом");
-                return;
+                System.out.println("ОШИБКА: Размер массива указан не верно");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        isCorrectInput = false;
+        while  (!isCorrectInput) {
+            System.out.print("Введите массив целых чисел: ");
+            final String inputLine = in.nextLine();
+            inputArray = inputLine.split(" ");
+
+            try {
+                if (arraySize != inputArray.length) {
+                    throw new Exception("ОШИБКА: Размер массива не совпадает с кол-вом введенных значений");
+                }
+
+                numbers = new int[arraySize];
+                for (int i = 0; i < inputArray.length; i++) {
+                    numbers[i] = Integer.parseInt(inputArray[i]);
+                }
+                isCorrectInput = true;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -67,10 +77,9 @@ public class Main {
             }
         }
 
-        // это вывод
         for (int i = 0; i < firstPositiveNum; i++) {
             for (int j = 0; j < i + 1; j++) {
-                System.out.print(arrayPascalTriangle[i][j]);
+                System.out.print(arrayPascalTriangle[i][j] + " ");
             }
             System.out.println();
         }
